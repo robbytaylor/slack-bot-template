@@ -29,6 +29,12 @@ variable command {
   description = "The command used to send a secret message"
 }
 
+variable dynamodb_table_name {
+  type        = string
+  default     = "teams"
+  description = "The name of the DynamoDB table to store Slack Team install details"
+}
+
 variable lambda_handler {
   type    = string
   default = "handler.app"

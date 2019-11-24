@@ -18,6 +18,6 @@ module "apigateway" {
     "SLACK_CLIENT_ID" : local.slack_client_id
     "SLACK_CLIENT_SECRET" : local.slack_client_secret
     "SLACK_SCOPES" : "bot,commands,users:read.email,users.profile:read,users:read,chat:write:bot"
-    "TABLE_NAME" : aws_dynamodb_table.teams.name
+    "TABLE_NAME" : var.dynamodb_table_name
   }
 }
