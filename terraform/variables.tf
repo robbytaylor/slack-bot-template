@@ -59,3 +59,9 @@ variable region {
   type    = string
   default = "eu-west-2"
 }
+
+variable slack_scopes {
+  type        = string
+  default     = "bot,commands,chat:write:bot"
+  description = "The required Slack OAuth scopes for the app. Used for generate an install link"
+}
