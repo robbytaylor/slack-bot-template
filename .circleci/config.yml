@@ -1,0 +1,97 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.4
+    steps:
+      - checkout
+      - run:
+          command: cd app && npm install --production
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+  package:
+    docker:
+      - image: circleci/node:10.4
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Package
+          command: cd app && zip ../lambda.zip -r ./*
+      - persist_to_workspace:
+          root: ~/
+          paths: project
+  deploy-development:
+    docker:
+      - image: cibuilds/aws:1.16.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Deploy to AWS Development
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID=${DEV_AWS_ACCESS_KEY_ID}' >> $BASH_ENV
+            echo 'export AWS_SECRET_ACCESS_KEY=${DEV_AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
+            echo 'export AWS_REGION=${AWS_REGION}' >> $BASH_ENV
+            source $BASH_ENV
+            aws lambda update-function-code --zip-file fileb://lambda.zip --function-name ${FUNCTION_NAME} > /dev/null
+  deploy-production:
+    docker:
+      - image: cibuilds/aws:1.16.1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Deploy to AWS Production
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}' >> $BASH_ENV
+            echo 'export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}' >> $BASH_ENV
+            echo 'export AWS_REGION=${AWS_REGION}' >> $BASH_ENV
+            source $BASH_ENV
+            aws lambda update-function-code --zip-file fileb://lambda.zip --function-name ${FUNCTION_NAME} > /dev/null
+
+workflows:
+  version: 2
+  build-and-deploy-development:
+    jobs:
+      - build
+      - package:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - deploy-development:
+          filters:
+            branches:
+              only: master
+          requires:
+            - package
+  build-and-deploy-production:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - package:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - build
+      - deploy-production:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - package
