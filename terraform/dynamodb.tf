@@ -15,6 +15,8 @@ resource "aws_dynamodb_table" "teams" {
   server_side_encryption {
     enabled = true
   }
+
+  tags = var.tags
 }
 
 data aws_iam_policy_document dynamodb {

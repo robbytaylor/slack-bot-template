@@ -82,3 +82,8 @@ variable slack_scopes {
   default     = "bot,commands,chat:write:bot"
   description = "The required Slack OAuth scopes for the app. Used for generate an install link"
 }
+
+variable tags {
+  type    = map
+  default = {}
+}

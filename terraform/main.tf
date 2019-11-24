@@ -1,5 +1,5 @@
 module "apigateway" {
-  source = "github.com/robbytaylor/terraform-apigateway-lambda"
+  source = "github.com/robbytaylor/terraform-apigateway-lambda?ref=v1.1.0"
 
   api_name             = var.api_name
   lambda_function_name = var.lambda_function_name
@@ -11,6 +11,8 @@ module "apigateway" {
     aws     = "aws"
     aws.acm = "aws.acm"
   }
+
+  tags = var.tags
 
   environment_variables = {
     "SLACK_BOT_TOKEN" : local.slack_bot_token
