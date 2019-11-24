@@ -26,7 +26,7 @@ variable dynamodb_billing_mode {
 
 variable dynamodb_read_capabity {
   type    = number
-  default = 10
+  default = 0
 }
 
 variable dynamodb_table_name {
@@ -37,7 +37,7 @@ variable dynamodb_table_name {
 
 variable dynamodb_write_capabity {
   type    = number
-  default = 10
+  default = 0
 }
 
 variable lambda_handler {
