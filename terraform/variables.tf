@@ -19,12 +19,6 @@ variable circleci_user {
   default = "CircleCI"
 }
 
-variable command {
-  type        = string
-  default     = "secret-message"
-  description = "The command used to send a secret message"
-}
-
 variable dynamodb_billing_mode {
   type    = string
   default = "PAY_PER_REQUEST"
