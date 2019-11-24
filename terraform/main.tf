@@ -13,11 +13,11 @@ module "apigateway" {
   }
 
   environment_variables = {
-    "SLACK_SIGNING_SECRET" : local.slack_signing_secret
     "SLACK_BOT_TOKEN" : local.slack_bot_token
     "SLACK_CLIENT_ID" : local.slack_client_id
     "SLACK_CLIENT_SECRET" : local.slack_client_secret
     "SLACK_SCOPES" : var.slack_scopes
+    "SLACK_SIGNING_SECRET" : local.slack_signing_secret
     "TABLE_NAME" : var.dynamodb_table_name
   }
 }
