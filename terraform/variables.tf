@@ -14,11 +14,6 @@ variable lambda_function_name {
   type = string
 }
 
-variable secret_name {
-  type        = string
-  description = "The Secrets Manager secret containing the Slack credentials"
-}
-
 variable circleci_user {
   type    = string
   default = "CircleCI"
@@ -59,6 +54,12 @@ variable domain_name {
 variable region {
   type    = string
   default = "eu-west-1"
+}
+
+variable secret_name {
+  type        = string
+  default     = "slack-secrets"
+  description = "The Secrets Manager secret containing the Slack credentials"
 }
 
 variable slack_scopes {
