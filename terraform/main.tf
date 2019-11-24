@@ -13,7 +13,6 @@ module "apigateway" {
   }
 
   environment_variables = {
-    "COMMAND" : var.command
     "SLACK_SIGNING_SECRET" : local.slack_signing_secret
     "SLACK_CLIENT_ID" : local.slack_client_id
     "SLACK_CLIENT_SECRET" : local.slack_client_secret
