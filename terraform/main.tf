@@ -5,7 +5,7 @@ module "apigateway" {
   lambda_function_name = var.lambda_function_name
   domain_name          = var.domain_name
   route53_hosted_zone  = var.route53_hosted_zone
-  http_methods         = local.slack_bot_token ? ["POST"] : ["GET", "POST"]
+  http_methods         = local.slack_bot_token != "" ? ["POST"] : ["GET", "POST"]
 
   providers = {
     aws     = "aws"
