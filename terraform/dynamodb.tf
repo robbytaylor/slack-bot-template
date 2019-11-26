@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "teams" {
-  count = local.create_dynamodb_for_oauth ? 1 : 0
+  count = local.single_workspace ? 0 : 1
 
   name           = var.dynamodb_table_name
   hash_key       = "team_id"
@@ -20,7 +20,7 @@ resource "aws_dynamodb_table" "teams" {
 }
 
 data aws_iam_policy_document dynamodb {
-  count = local.create_dynamodb_for_oauth ? 1 : 0
+  count = local.single_workspace ? 0 : 1
 
   statement {
     actions = [
@@ -38,14 +38,14 @@ data aws_iam_policy_document dynamodb {
 }
 
 resource aws_iam_policy dynamodb {
-  count = local.create_dynamodb_for_oauth ? 1 : 0
+  count = local.single_workspace ? 0 : 1
 
   name   = "AccessTeamsDynamoDBTable"
   policy = data.aws_iam_policy_document.dynamodb[0].json
 }
 
 resource aws_iam_role_policy_attachment dynamodb {
-  count = local.create_dynamodb_for_oauth ? 1 : 0
+  count = local.single_workspace ? 0 : 1
 
   role       = module.apigateway.lambda_role_name
   policy_arn = aws_iam_policy.dynamodb[0].arn
