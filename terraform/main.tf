@@ -1,5 +1,5 @@
 module "apigateway" {
-  source = "github.com/robbytaylor/terraform-apigateway-lambda?ref=v1.1.0"
+  source = "github.com/robbytaylor/terraform-apigateway-lambda?ref=v1.1.1"
 
   api_name             = var.api_name
   lambda_function_name = var.lambda_function_name
