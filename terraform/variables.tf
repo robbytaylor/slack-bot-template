@@ -5,7 +5,7 @@ locals {
   slack_client_id      = lookup(local.slack_credentials, "SLACK_CLIENT_ID", "")
   slack_client_secret  = lookup(local.slack_credentials, "SLACK_CLIENT_SECRET", "")
 
-  single_workspace = var.single_workspace
+  single_workspace = var.distributed == false
 }
 
 variable api_name {
@@ -19,6 +19,12 @@ variable lambda_function_name {
 variable circleci_user {
   type    = string
   default = "CircleCI"
+}
+
+variable distributed {
+  type        = bool
+  default     = false
+  description = "Whether the resources for app distributed should be created"
 }
 
 variable dynamodb_billing_mode {
@@ -65,12 +71,6 @@ variable domain_name {
 variable region {
   type    = string
   default = "eu-west-1"
-}
-
-variable single_workspace {
-  type        = bool
-  default     = true
-  description = "Whether the app should be for a single workspace or available for distribution"
 }
 
 variable secret_name {
