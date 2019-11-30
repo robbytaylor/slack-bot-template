@@ -1,6 +1,6 @@
 # Slack Bot Template
 
-Use thsi template to create a Slack Bot using [Bolt](https://slack.dev/bolt/concepts).
+Use this template to create a Slack Bot using [Bolt](https://slack.dev/bolt/concepts).
 
 The template app supports authentication with Slack via a bot token or OAuth.
 It can therefore be used to create an app for a single workspace or for distribution.
