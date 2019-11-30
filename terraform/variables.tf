@@ -1,11 +1,11 @@
 locals {
-  slack_credentials         = jsondecode(data.aws_secretsmanager_secret_version.slack.secret_string)
-  slack_signing_secret      = local.slack_credentials["SLACK_SIGNING_SECRET"]
-  slack_bot_token           = lookup(local.slack_credentials, "SLACK_BOT_TOKEN", "")
-  slack_client_id           = lookup(local.slack_credentials, "SLACK_CLIENT_ID", "")
-  slack_client_secret       = lookup(local.slack_credentials, "SLACK_CLIENT_SECRET", "")
+  slack_credentials    = jsondecode(data.aws_secretsmanager_secret_version.slack.secret_string)
+  slack_signing_secret = local.slack_credentials["SLACK_SIGNING_SECRET"]
+  slack_bot_token      = lookup(local.slack_credentials, "SLACK_BOT_TOKEN", "")
+  slack_client_id      = lookup(local.slack_credentials, "SLACK_CLIENT_ID", "")
+  slack_client_secret  = lookup(local.slack_credentials, "SLACK_CLIENT_SECRET", "")
 
-  single_workspace          = local.slack_bot_token != ""
+  single_workspace = var.single_workspace
 }
 
 variable api_name {
@@ -65,6 +65,12 @@ variable domain_name {
 variable region {
   type    = string
   default = "eu-west-1"
+}
+
+variable single_workspace {
+  type        = bool
+  default     = true
+  description = "Whether the app should be for a single workspace or available for distribution"
 }
 
 variable secret_name {
