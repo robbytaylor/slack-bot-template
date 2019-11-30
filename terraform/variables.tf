@@ -2,8 +2,8 @@ locals {
   slack_credentials         = jsondecode(data.aws_secretsmanager_secret_version.slack.secret_string)
   slack_signing_secret      = local.slack_credentials["SLACK_SIGNING_SECRET"]
   slack_bot_token           = lookup(local.slack_credentials, "SLACK_BOT_TOKEN", "")
-  slack_client_id           = local.slack_credentials["SLACK_CLIENT_ID"]
-  slack_client_secret       = local.slack_credentials["SLACK_CLIENT_SECRET"]
+  slack_client_id           = lookup(local.slack_credentials, "SLACK_CLIENT_ID", "")
+  slack_client_secret       = lookup(local.slack_credentials, "SLACK_CLIENT_SECRET", "")
 
   single_workspace          = local.slack_bot_token != ""
 }
