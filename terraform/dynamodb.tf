@@ -40,7 +40,7 @@ data aws_iam_policy_document dynamodb {
 resource aws_iam_policy dynamodb {
   count = local.single_workspace ? 0 : 1
 
-  name   = "AccessTeamsDynamoDBTable"
+  name   = "AccessTeamsDynamoDBTable-${var.dynamodb_table_name}"
   policy = data.aws_iam_policy_document.dynamodb[0].json
 }
 
