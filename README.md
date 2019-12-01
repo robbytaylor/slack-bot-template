@@ -1,5 +1,7 @@
 # Slack Bot Template
 
+A detailed how to for using this template is available on [Medium](https://medium.com/@robbytaylor/how-to-build-a-slack-bot-in-node-js-and-deploy-it-to-aws-b72bfd5c1905)
+
 Use this template to create a Slack Bot using [Bolt](https://slack.dev/bolt/concepts).
 
 The template app supports authentication with Slack via a bot token or OAuth.
