@@ -6,12 +6,6 @@ const expressReceiver = new ExpressReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET
 });
 
-const app = process.env.SLACK_BOT_TOKEN ?
-  makeAppWithToken(process.env.SLACK_BOT_TOKEN, expressReceiver)
-  : makeAppWithOauth(expressReceiver);
-
-require('./lib/bot')(app);
-
 const makeAppWithToken = (token, expressReceiver) => {
   return new App({
     token: token,
@@ -31,5 +25,11 @@ const makeAppWithOauth = expressReceiver => {
 
   return app;
 }
+
+const app = (process.env.USE_OAUTH || false) ?
+  makeAppWithToken(process.env.SLACK_BOT_TOKEN, expressReceiver)
+  : makeAppWithOauth(expressReceiver);
+
+require('./lib/bot')(app);
 
 module.exports.app = require('serverless-http')(expressReceiver.app);

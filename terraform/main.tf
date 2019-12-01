@@ -21,5 +21,6 @@ module "apigateway" {
     "SLACK_SCOPES" : var.slack_scopes
     "SLACK_SIGNING_SECRET" : local.slack_signing_secret
     "TABLE_NAME" : var.dynamodb_table_name
+    "USE_OAUTH" : var.distributed
   }
 }
